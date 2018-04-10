@@ -101,16 +101,16 @@
             </objects>
             <point key="canvasLocation" x="1569" y="36"/>
         </scene>
-        <!--Table View Controller-->
+        <!--To Do Table View Controller-->
         <scene sceneID="Wys-es-oF1">
             <objects>
-                <tableViewController id="43F-CM-ffH" sceneMemberID="viewController">
+                <tableViewController id="43F-CM-ffH" customClass="ToDoTableViewController" customModule="HomeCleaning" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="WtZ-cY-aZf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Zp8-UD-vne">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="toDoIdentifier" id="Zp8-UD-vne">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Zp8-UD-vne" id="zHS-nR-skb">
@@ -192,6 +192,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="uIl-Zr-gGW"/>
+        <segue reference="qp8-vk-ros"/>
     </inferredMetricsTieBreakers>
 </document>

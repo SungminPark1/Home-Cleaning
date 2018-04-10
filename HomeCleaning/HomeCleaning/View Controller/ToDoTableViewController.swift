@@ -1,50 +1,49 @@
 //
-//  TaskTableViewController.swift
+//  ToDoTableViewController.swift
 //  HomeCleaning
 //
-//  Created by Balor on 4/5/18.
+//  Created by Balor on 4/9/18.
 //  Copyright © 2018 Balor. All rights reserved.
 //
 
 import UIKit
 
-class AreaDetailTableViewController: UITableViewController {
-    var area: Area?
+class ToDoTableViewController: UITableViewController {
+    var areas = [Area]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        title = area?.name
-        
-        if (area?.tasks.count == 0) {
-            area?.tasks.append(Task(name: "Clean", info: "Info About Cleaning"))
-            area?.tasks.append(Task(name: "Sweep", info: "Info About Sweeping"))
-            area?.tasks.append(Task(name: "Vacuum", info: "Info About Vacuuming"))
-        }
-    }
+        navigationItem.title = "To-Dos"
 
-    // MARK: - Actions -
-    @objc func addItem() {
-        //performSegue(withIdentifier: , sender: nil)
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        areas = AreaData.sharedData.areas
+        
+        self.tableView.reloadData()
+    }
+
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return areas.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return (area?.tasks.count)!
+        return areas[section].tasks.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "areaTaskIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "toDoIdentifier", for: indexPath)
 
-        cell.textLabel?.text = area?.tasks[indexPath.row].name
+        cell.textLabel?.text = areas[indexPath.section].tasks[indexPath.row].name
 
         return cell
     }
@@ -57,22 +56,24 @@ class AreaDetailTableViewController: UITableViewController {
     }
     */
 
+    /*
+    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            area?.tasks.remove(at: indexPath.row)
-            
-            // update the tableview
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
-            //
-        }
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }    
     }
+    */
 
+    /*
+    // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        let taskToMove = area?.tasks.remove(at: fromIndexPath.row)
-        area?.tasks.insert(taskToMove!, at: to.row)
+
     }
+    */
 
     /*
     // Override to support conditional rearranging of the table view.
@@ -84,13 +85,18 @@ class AreaDetailTableViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let indexPath = tableView.indexPathForSelectedRow {
+            let selectedSection = indexPath.section
             let selectedRow = indexPath.row
-            guard selectedRow < (area?.tasks.count)! else {
+            guard selectedSection < AreaData.sharedData.areas.count else {
+                print("row \(selectedSection) is not in Area!")
+                return
+            }
+            guard selectedRow < AreaData.sharedData.areas[selectedSection].tasks.count else {
                 print("row \(selectedRow) is not in Task!")
                 return
             }
             let TaskDetailVC = segue.destination as! TaskDetailTableViewController
-            TaskDetailVC.task = area?.tasks[selectedRow]
+            TaskDetailVC.task = AreaData.sharedData.areas[selectedSection].tasks[selectedRow]
         }
     }
 

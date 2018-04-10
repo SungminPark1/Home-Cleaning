@@ -88,7 +88,7 @@ class AreaTableViewController: UITableViewController {
         if let indexPath = tableView.indexPathForSelectedRow {
             let selectedRow = indexPath.row
             guard selectedRow < AreaData.sharedData.areas.count else {
-                print("row \(selectedRow) is not in parks!")
+                print("row \(selectedRow) is not in Area!")
                 return
             }
             let AreaDetailVC = segue.destination as! AreaDetailTableViewController

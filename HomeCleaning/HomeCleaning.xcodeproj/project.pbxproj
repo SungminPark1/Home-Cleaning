@@ -18,6 +18,7 @@
 		3BBDC15F2076D4CE0001E66B /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBDC15E2076D4CE0001E66B /* Task.swift */; };
 		3BBDC1622076D4FA0001E66B /* AreaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBDC1612076D4FA0001E66B /* AreaData.swift */; };
 		3BBDC165207BE1F20001E66B /* TaskDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBDC164207BE1F20001E66B /* TaskDetailTableViewController.swift */; };
+		3BBDC167207C49710001E66B /* ToDoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBDC166207C49710001E66B /* ToDoTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		3BBDC15E2076D4CE0001E66B /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		3BBDC1612076D4FA0001E66B /* AreaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaData.swift; sourceTree = "<group>"; };
 		3BBDC164207BE1F20001E66B /* TaskDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailTableViewController.swift; sourceTree = "<group>"; };
+		3BBDC166207C49710001E66B /* ToDoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 				3BBDC1552076CF030001E66B /* AreaTableViewController.swift */,
 				3BBDC1582076D2220001E66B /* AreaDetailTableViewController.swift */,
 				3BBDC164207BE1F20001E66B /* TaskDetailTableViewController.swift */,
+				3BBDC166207C49710001E66B /* ToDoTableViewController.swift */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 				3BBDC1622076D4FA0001E66B /* AreaData.swift in Sources */,
 				3BBDC165207BE1F20001E66B /* TaskDetailTableViewController.swift in Sources */,
 				3BBDC15F2076D4CE0001E66B /* Task.swift in Sources */,
+				3BBDC167207C49710001E66B /* ToDoTableViewController.swift in Sources */,
 				3BBDC15C2076D4A10001E66B /* Area.swift in Sources */,
 				3BBDC1282076CE2C0001E66B /* AppDelegate.swift in Sources */,
 			);
