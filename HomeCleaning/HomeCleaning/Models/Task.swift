@@ -10,7 +10,8 @@ import Foundation
 
 class Task {
     var name: String
-    var info = "Info"
+    var notifcation: Bool = false
+    var info: String = "Info"
     
     init(name: String, info: String) {
         self.name = name

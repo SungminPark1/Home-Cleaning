@@ -1,5 +1,5 @@
 //
-//  TaskDetailTableViewController.swift
+//  ToDoTableViewController.swift
 //  HomeCleaning
 //
 //  Created by Balor on 4/9/18.
@@ -8,15 +8,13 @@
 
 import UIKit
 
-class TaskDetailTableViewController: UITableViewController {
-    var task: Task?
-    let numSections = 2
-    enum section: Int {
-        case name = 0, info
-    }
+class ToDoTableViewController: UITableViewController {
+    var areas = [Area]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.title = "To-Dos"
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -24,41 +22,39 @@ class TaskDetailTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func viewDidAppear(_ animated: Bool) {
+        areas = AreaData.sharedData.areas
+        
+        self.tableView.reloadData()
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return numSections
+        return areas.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        return areas[section].tasks.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "taskIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "toDoIdentifier", for: indexPath)
 
-        switch indexPath.section {
-        case section.name.rawValue:
-            cell.textLabel?.text = task?.name
-    
-        case section.info.rawValue:
-            cell.textLabel?.text = task?.info
+        cell.textLabel?.text = areas[indexPath.section].tasks[indexPath.row].name
 
-        default:
-            cell.textLabel?.text = "TBD"
-        }
-            
         return cell
     }
-
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        var header: String?
+        
+        header = areas[section].name
+        
+        return header
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -94,14 +90,21 @@ class TaskDetailTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if let indexPath = tableView.indexPathForSelectedRow {
+            let selectedSection = indexPath.section
+            let selectedRow = indexPath.row
+            guard selectedSection < AreaData.sharedData.areas.count else {
+                print("row \(selectedSection) is not in Area!")
+                return
+            }
+            guard selectedRow < AreaData.sharedData.areas[selectedSection].tasks.count else {
+                print("row \(selectedRow) is not in Task!")
+                return
+            }
+            let TaskDetailVC = segue.destination as! TaskDetailViewController
+            TaskDetailVC.task = AreaData.sharedData.areas[selectedSection].tasks[selectedRow]
+        }
     }
-    */
 
 }

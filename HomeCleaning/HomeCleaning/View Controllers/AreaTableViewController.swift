@@ -1,5 +1,5 @@
 //
-//  TaskTableViewController.swift
+//  AreaTableViewController.swift
 //  HomeCleaning
 //
 //  Created by Balor on 4/5/18.
@@ -8,29 +8,27 @@
 
 import UIKit
 
-class AreaDetailTableViewController: UITableViewController {
-    var area: Area?
+class AreaTableViewController: UITableViewController {
+    var areas = [Area]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        title = area?.name
-        
-        if (area?.tasks.count == 0) {
-            area?.tasks.append(Task(name: "Clean", info: "Info About Cleaning"))
-            area?.tasks.append(Task(name: "Sweep", info: "Info About Sweeping"))
-            area?.tasks.append(Task(name: "Vacuum", info: "Info About Vacuuming"))
-        }
-    }
-
-    // MARK: - Actions -
-    @objc func addItem() {
-        //performSegue(withIdentifier: , sender: nil)
+        navigationItem.title = "Areas"
+            
+        loadData()
     }
     
+    func loadData() {
+        areas.append(Area(name: "Bedroom", tasks: [Task]()))
+        areas.append(Area(name: "Living Room", tasks: [Task]()))
+        areas.append(Area(name: "Kitchen", tasks: [Task]()))
+        
+        AreaData.sharedData.areas = areas
+    }
+
     // MARK: - Table view data source
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -38,14 +36,22 @@ class AreaDetailTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return (area?.tasks.count)!
+        return areas.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "areaTaskIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "areaIdentifier", for: indexPath)
 
-        cell.textLabel?.text = area?.tasks[indexPath.row].name
-
+        cell.textLabel?.text = areas[indexPath.row].name
+        
+        // add progressView to Cell
+        let progressView = UIProgressView(progressViewStyle: .default)
+        progressView.backgroundColor = UIColor.gray
+//        progressView.tintColor = UIColor(red: 1, green: 0.5, blue: 0.5, alpha: 1)
+        progressView.progress = 0.5
+        
+        cell.accessoryView = progressView
+        
         return cell
     }
 
@@ -57,22 +63,24 @@ class AreaDetailTableViewController: UITableViewController {
     }
     */
 
+    /*
+    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            area?.tasks.remove(at: indexPath.row)
-            
-            // update the tableview
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
-            //
-        }
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }    
     }
+    */
 
+    /*
+    // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        let taskToMove = area?.tasks.remove(at: fromIndexPath.row)
-        area?.tasks.insert(taskToMove!, at: to.row)
+
     }
+    */
 
     /*
     // Override to support conditional rearranging of the table view.
@@ -82,15 +90,17 @@ class AreaDetailTableViewController: UITableViewController {
     }
     */
 
+    // MARK: - Navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let indexPath = tableView.indexPathForSelectedRow {
             let selectedRow = indexPath.row
-            guard selectedRow < (area?.tasks.count)! else {
-                print("row \(selectedRow) is not in Task!")
+            guard selectedRow < AreaData.sharedData.areas.count else {
+                print("row \(selectedRow) is not in Area!")
                 return
             }
-            let TaskDetailVC = segue.destination as! TaskDetailTableViewController
-            TaskDetailVC.task = area?.tasks[selectedRow]
+            let AreaDetailVC = segue.destination as! AreaDetailTableViewController
+            AreaDetailVC.area = AreaData.sharedData.areas[selectedRow]
         }
     }
 
