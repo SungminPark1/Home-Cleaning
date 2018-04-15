@@ -27,9 +27,9 @@ class TaskDetailViewController: UIViewController {
     }
     
     @objc func switchChanged(mySwitch: UISwitch!) {
-        task?.notifcation = !(task?.notifcation)!
+        task?.notification = !(task?.notification)!
             
-        mySwitch.setOn((task?.notifcation)!, animated: true)
+        mySwitch.setOn((task?.notification)!, animated: true)
     }
     
     /*
@@ -69,7 +69,7 @@ extension TaskDetailViewController: UITableViewDataSource {
             
             // here is programatically switch make to the table view
             let switchView = UISwitch(frame: .zero)
-            switchView.setOn((task?.notifcation)!, animated: true)
+            switchView.setOn((task?.notification)!, animated: true)
             switchView.tag = indexPath.row // for detect which row switch Changed
             switchView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
             cell.accessoryView = switchView

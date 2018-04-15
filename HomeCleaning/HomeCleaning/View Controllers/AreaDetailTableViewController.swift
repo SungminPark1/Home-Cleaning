@@ -21,9 +21,9 @@ class AreaDetailTableViewController: UITableViewController {
         tableView.tableFooterView = UIView(frame: .zero)
         
         if (area?.tasks.count == 0) {
-            area?.tasks.append(Task(name: "Clean", info: "Info About Cleaning"))
-            area?.tasks.append(Task(name: "Sweep", info: "Info About Sweeping"))
-            area?.tasks.append(Task(name: "Vacuum", info: "Info About Vacuuming"))
+            area?.tasks.append(Task(name: "Clean", info: "Info About Cleaning", notification: false))
+            area?.tasks.append(Task(name: "Sweep", info: "Info About Sweeping", notification: false))
+            area?.tasks.append(Task(name: "Vacuum", info: "Info About Vacuuming", notification: false))
         }
     }
     
@@ -31,7 +31,12 @@ class AreaDetailTableViewController: UITableViewController {
         if segue.identifier == "unwindWithDoneTapped" {
             let addTaskVC = segue.source as! AddTaskViewController
             
-            area?.tasks.append(Task(name: addTaskVC.name, info: addTaskVC.info))
+            let name = addTaskVC.taskNameTextField.text
+            let info = addTaskVC.info
+            let notification = addTaskVC.notificicationSwitch.isOn
+            
+            area?.tasks.append(Task(name: name!, info: info, notification: notification))
+
             tableView.reloadData()
         }
     }
@@ -52,6 +57,8 @@ class AreaDetailTableViewController: UITableViewController {
         
         if indexPath.row < (area?.tasks.count)! {
             cell.textLabel?.text = area?.tasks[indexPath.row].name
+            cell.textLabel?.textColor = UIColor.black
+            cell.textLabel?.textAlignment = .left
         } else {
             cell.textLabel?.text = "+ Add Task"
             cell.textLabel?.textColor = self.view.tintColor

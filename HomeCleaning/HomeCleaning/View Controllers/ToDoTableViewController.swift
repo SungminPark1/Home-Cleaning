@@ -51,7 +51,10 @@ class ToDoTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         var header: String?
         
-        header = areas[section].name
+        // only show header if it has task
+        if section < areas.count && areas[section].tasks.count > 0{
+            header = areas[section].name
+        }
         
         return header
     }
