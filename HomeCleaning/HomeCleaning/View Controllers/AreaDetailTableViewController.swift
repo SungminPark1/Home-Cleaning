@@ -14,17 +14,11 @@ class AreaDetailTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
         title = area?.name
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         tableView.tableFooterView = UIView(frame: .zero)
         
-        if (area?.tasks.count == 0) {
-            area?.tasks.append(Task(name: "Clean", info: "Info About Cleaning", notification: false))
-            area?.tasks.append(Task(name: "Sweep", info: "Info About Sweeping", notification: false))
-            area?.tasks.append(Task(name: "Vacuum", info: "Info About Vacuuming", notification: false))
-        }
     }
     
     @IBAction func unwindToAreaDetail(segue: UIStoryboardSegue) {
