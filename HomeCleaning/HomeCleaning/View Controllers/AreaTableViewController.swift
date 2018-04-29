@@ -86,6 +86,8 @@ class AreaTableViewController: UITableViewController {
             cell.textLabel?.text = "+ Add Area"
             cell.textLabel?.textColor = self.view.tintColor
             cell.textLabel?.textAlignment = .center
+            
+            cell.accessoryView = nil
         }
         
         return cell
@@ -105,6 +107,8 @@ class AreaTableViewController: UITableViewController {
             // Delete the row from the data source
             areas.remove(at: indexPath.row)
             
+            AreaData.sharedData.areas = self.areas
+            
             // update the tableview
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
@@ -121,7 +125,6 @@ class AreaTableViewController: UITableViewController {
     }
     
     // MARK: - Navigation
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let indexPath = tableView.indexPathForSelectedRow {
             let selectedRow = indexPath.row

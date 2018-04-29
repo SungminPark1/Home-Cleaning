@@ -10,10 +10,12 @@ import UIKit
 
 class TaskDetailViewController: UIViewController {
     var task: Task?
-    let numSections = 3
+    let numSections = 4
     enum sectionID: Int {
-        case name = 0, notification, info
+        case name = 0, setting, done, reset
     }
+    
+    var editButton: UIBarButtonItem!
     
     @IBOutlet weak var visibleTableControl: UISegmentedControl!
     @IBOutlet weak var statusTable: UITableView!
@@ -21,27 +23,55 @@ class TaskDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editTask))
+        self.navigationItem.rightBarButtonItem = editButton
+        
+//        editButton.isEnabled = false
+        
         statusTable.delegate = self
         statusTable.dataSource = self
         statusTable.tableFooterView = UIView(frame: .zero)
     }
     
-    @objc func switchChanged(mySwitch: UISwitch!) {
+    @IBAction func unwindToTaskDetail(segue: UIStoryboardSegue) {
+        if segue.identifier == "unwindToTaskDetail" {
+            let addTaskVC = segue.source as! AddTaskViewController
+            
+            task?.name = addTaskVC.taskNameTextField.text!
+            task?.frequency = addTaskVC.frequency
+            task?.notification = addTaskVC.notificicationSwitch.isOn
+            
+            self.statusTable.reloadData()
+        }
+    }
+    
+    @objc func editTask() {
+        performSegue(withIdentifier: "editTaskSegue", sender: self)
+    }
+    
+    @objc func notificationSwitchChanged(mySwitch: UISwitch!) {
         task?.notification = !(task?.notification)!
             
         mySwitch.setOn((task?.notification)!, animated: true)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @objc func pauseSwitchChanged(mySwitch: UISwitch!) {
+        task?.isPaused = !(task?.isPaused)!
+        
+        mySwitch.setOn((task?.isPaused)!, animated: true)
     }
-    */
-
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "editTaskSegue" {
+            let addTaskNav = segue.destination as! UINavigationController
+            let addTaskVC = addTaskNav.viewControllers[0] as! AddTaskViewController
+            addTaskVC.editTask = true
+            addTaskVC.name = task?.name ?? ""
+            addTaskVC.frequency = task?.frequency ?? 14
+            addTaskVC.notification = task?.notification ?? false
+        }
+    }
 }
 
 extension TaskDetailViewController: UITableViewDelegate {
@@ -53,8 +83,22 @@ extension TaskDetailViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 1
+        switch section {
+        case sectionID.name.rawValue:
+            return 2
+            
+        case sectionID.setting.rawValue:
+            return 3
+            
+        case sectionID.done.rawValue:
+            return 2
+            
+        case sectionID.reset.rawValue:
+            return 1
+            
+        default:
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -62,20 +106,49 @@ extension TaskDetailViewController: UITableViewDataSource {
         
         switch indexPath.section {
         case sectionID.name.rawValue:
-            cell.textLabel?.text = task?.name
+            if indexPath.row == 0 {
+                cell.textLabel?.text = task?.name
+            } else if indexPath.row == 1 {
+                cell.textLabel?.text = "Task is due in xx Day(s)"
+            }
         
-        case sectionID.notification.rawValue:
-            cell.textLabel?.text = "Notification"
-            
+        case sectionID.setting.rawValue:
             // here is programatically switch make to the table view
             let switchView = UISwitch(frame: .zero)
-            switchView.setOn((task?.notification)!, animated: true)
             switchView.tag = indexPath.row // for detect which row switch Changed
-            switchView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
-            cell.accessoryView = switchView
             
-        case sectionID.info.rawValue:
-            cell.textLabel?.text = task?.info
+            if indexPath.row == 0 {
+                cell.textLabel?.text = "Due Every: \(task?.frequency ?? -1) Day(s)"
+                
+                cell.accessoryView = nil
+            } else if indexPath.row == 1 {
+                cell.textLabel?.text = "Due Date Alert"
+                
+                switchView.setOn((task?.notification)!, animated: true)
+                switchView.addTarget(self, action: #selector(notificationSwitchChanged), for: .valueChanged)
+                cell.accessoryView = switchView
+            } else {
+                cell.textLabel?.text = "Pause Task"
+                
+                switchView.setOn((task?.isPaused)!, animated: true)
+                switchView.addTarget(self, action: #selector(pauseSwitchChanged), for: .valueChanged)
+                cell.accessoryView = switchView
+            }
+        
+        case sectionID.done.rawValue:
+            cell.textLabel?.textAlignment = .center
+            cell.textLabel?.textColor = self.view.tintColor
+            
+            if indexPath.row == 0 {
+                cell.textLabel?.text = "Just Finished Task"
+            } else {
+                cell.textLabel?.text = "Finished Task On..."
+            }
+        
+        case sectionID.reset.rawValue:
+            cell.textLabel?.textAlignment = .center
+            cell.textLabel?.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
+            cell.textLabel?.text = "Reset Timer"
             
         default:
             cell.textLabel?.text = "TBD"
@@ -91,18 +164,27 @@ extension TaskDetailViewController: UITableViewDataSource {
         case sectionID.name.rawValue:
             title = "Task"
         
-        case sectionID.notification.rawValue:
-            title = ""
-            
-        case sectionID.info.rawValue:
-            title = "Info"
+        case sectionID.setting.rawValue:
+            title = "Settings"
+           
+        case sectionID.done.rawValue:
+            title = "Finished Task"
             
         default:
-            title = "TBD"
+            title = ""
         }
         
         return title
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.section {
+        case sectionID.done.rawValue:
+            return 55.0
+            
+        default:
+            return 44.0
+        }
+    }
 }
 

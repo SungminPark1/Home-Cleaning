@@ -21,15 +21,19 @@ class AreaDetailTableViewController: UITableViewController {
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
     @IBAction func unwindToAreaDetail(segue: UIStoryboardSegue) {
-        if segue.identifier == "unwindWithDoneTapped" {
+        if segue.identifier == "unwindToAreaDetail" {
             let addTaskVC = segue.source as! AddTaskViewController
             
             let name = addTaskVC.taskNameTextField.text
-            let info = addTaskVC.info
+            let frequency = addTaskVC.frequency
             let notification = addTaskVC.notificicationSwitch.isOn
             
-            area?.tasks.append(Task(name: name!, info: info, notification: notification))
+            area?.tasks.append(Task(name: name!, frequency: frequency, notification: notification))
 
             tableView.reloadData()
         }
@@ -53,10 +57,20 @@ class AreaDetailTableViewController: UITableViewController {
             cell.textLabel?.text = area?.tasks[indexPath.row].name
             cell.textLabel?.textColor = UIColor.black
             cell.textLabel?.textAlignment = .left
+            
+            
+            let subLabel = UILabel()
+            subLabel.text = "Due in xx Day(s)"
+            subLabel.font = UIFont.systemFont(ofSize: 12)
+            subLabel.sizeToFit()
+            
+            cell.accessoryView = subLabel
         } else {
             cell.textLabel?.text = "+ Add Task"
             cell.textLabel?.textColor = self.view.tintColor
             cell.textLabel?.textAlignment = .center
+            
+            cell.accessoryView = nil
         }
 
         return cell
@@ -83,22 +97,6 @@ class AreaDetailTableViewController: UITableViewController {
         }
     }
     
-    /*
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        let taskToMove = area?.tasks.remove(at: fromIndexPath.row)
-        area?.tasks.insert(taskToMove!, at: to.row)
-    }
-
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.row < (area?.tasks.count)! {
-            return true
-        } else {
-            return false
-        }
-    }
-    */
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row < (area?.tasks.count)! {
             performSegue(withIdentifier: "taskSegue", sender: self)
@@ -107,6 +105,7 @@ class AreaDetailTableViewController: UITableViewController {
         }
     }
 
+    // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "taskSegue" {
             if let indexPath = tableView.indexPathForSelectedRow {
@@ -119,7 +118,9 @@ class AreaDetailTableViewController: UITableViewController {
                 TaskDetailVC.task = area?.tasks[selectedRow]
             }
         } else if segue.identifier == "addTaskSegue" {
-            
+            let addTaskNav = segue.destination as! UINavigationController
+            let addTaskVC = addTaskNav.viewControllers[0] as! AddTaskViewController
+            addTaskVC.editTask = false
         }
     }
 

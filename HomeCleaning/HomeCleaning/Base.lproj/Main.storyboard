@@ -184,7 +184,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Done" id="Ae2-Ak-yAc">
                             <connections>
-                                <segue destination="ahY-C2-Qh1" kind="unwind" identifier="unwindWithDoneTapped" unwindAction="unwindToAreaDetailWithSegue:" id="EfR-8X-uIS"/>
+                                <action selector="doneTapped" destination="HVS-3U-NL1" id="1zG-m7-KTo"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -192,6 +192,8 @@
                         <outlet property="frequencyNumberLabel" destination="HZd-Qs-VPV" id="UFg-Li-b8k"/>
                         <outlet property="notificicationSwitch" destination="5pz-OT-Eew" id="Ehu-Ul-6to"/>
                         <outlet property="taskNameTextField" destination="kau-hs-fuM" id="OYx-bS-o6o"/>
+                        <segue destination="ahY-C2-Qh1" kind="unwind" identifier="unwindToAreaDetail" unwindAction="unwindToAreaDetailWithSegue:" id="Cnb-ZU-Rs7"/>
+                        <segue destination="ahY-C2-Qh1" kind="unwind" identifier="unwindToTaskDetail" unwindAction="unwindToTaskDetailWithSegue:" id="Dt8-W7-zyB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5FQ-iA-rN6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -211,7 +213,6 @@
                                 <rect key="frame" x="50" y="80" width="275" height="29"/>
                                 <segments>
                                     <segment title="Status"/>
-                                    <segment title="Detail"/>
                                     <segment title="History"/>
                                 </segments>
                             </segmentedControl>
@@ -246,6 +247,7 @@
                     <connections>
                         <outlet property="statusTable" destination="zlv-Mf-5oW" id="ziP-so-O7o"/>
                         <outlet property="visibleTableControl" destination="cx5-Ku-WwM" id="iZi-Xp-afT"/>
+                        <segue destination="S6V-cO-LgT" kind="presentation" identifier="editTaskSegue" id="VAO-9u-gNH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sL2-YW-PVs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -361,6 +363,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="YgG-1j-js8"/>
         <segue reference="cmN-Mm-tCI"/>
     </inferredMetricsTieBreakers>
 </document>

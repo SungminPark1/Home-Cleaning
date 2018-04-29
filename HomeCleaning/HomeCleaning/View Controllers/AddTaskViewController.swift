@@ -9,9 +9,10 @@
 import UIKit
 
 class AddTaskViewController: UIViewController {
-    var name: String = "New Task"
-    var info: String = "Info on New Task"
+    var editTask: Bool = false
+    var name: String = ""
     var frequency: Int = 14
+    var notification: Bool = false
     
     @IBOutlet weak var taskNameTextField: UITextField!
     @IBOutlet weak var frequencyNumberLabel: UILabel!
@@ -22,18 +23,28 @@ class AddTaskViewController: UIViewController {
         
         self.navigationItem.title = "New Task"
         
+        taskNameTextField.text = name
         frequencyNumberLabel.text = "\(frequency)"
+        notificicationSwitch.setOn(notification, animated: true)
     }
     
     @IBAction func cancelTapped() {
         dismiss(animated: true)
     }
     
+    @IBAction func doneTapped() {
+        if editTask {
+            performSegue(withIdentifier: "unwindToTaskDetail", sender: self)
+        } else {
+            performSegue(withIdentifier: "unwindToAreaDetail", sender: self)
+        }
+    }
+    
     @IBAction func minusButton(_ sender: Any) {
         frequency += -1
         
-        if frequency < 0 {
-            frequency = 0
+        if frequency < 1 {
+            frequency = 1
         }
         
         frequencyNumberLabel.text = "\(frequency)"
@@ -48,12 +59,4 @@ class AddTaskViewController: UIViewController {
         
         frequencyNumberLabel.text = "\(frequency)"
     }
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-
 }

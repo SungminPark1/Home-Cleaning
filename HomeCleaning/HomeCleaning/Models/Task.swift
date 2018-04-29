@@ -10,12 +10,14 @@ import Foundation
 
 class Task {
     var name: String
+    var frequency: Int = 14
     var notification: Bool = false
-    var info: String = "Info"
+    var isPaused: Bool = false
+    var history: [Date] = []
     
-    init(name: String, info: String, notification: Bool) {
+    init(name: String, frequency: Int, notification: Bool) {
         self.name = name
-        self.info = info
+        self.frequency = frequency
         self.notification = notification
     }
 }
