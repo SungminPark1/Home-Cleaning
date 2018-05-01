@@ -25,8 +25,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        let url = FileManager.filePathInDocumentsDirectory(filename: "data.json")
+        
+        // Saving to Disk in JSON format
+        let encoder = JSONEncoder()
+        do {
+            let dataToSave = try encoder.encode(AreaData.sharedData.areas)
+            
+            try dataToSave.write(to: url)
+        } catch {
+            print("Error: \(error)")
+        }
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {

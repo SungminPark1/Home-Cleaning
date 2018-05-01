@@ -48,7 +48,7 @@ class ToDoTableViewController: UITableViewController {
         cell.textLabel?.text = task.name
         
         let subLabel = UILabel()
-        subLabel.text = task.getRemainingTime()
+        subLabel.text = task.getRemainingTimeString()
         subLabel.font = UIFont.systemFont(ofSize: 12)
         subLabel.sizeToFit()
         

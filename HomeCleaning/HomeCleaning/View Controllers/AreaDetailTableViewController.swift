@@ -62,7 +62,7 @@ class AreaDetailTableViewController: UITableViewController {
             
             
             let subLabel = UILabel()
-            subLabel.text = (task?.getRemainingTime())!
+            subLabel.text = (task?.getRemainingTimeString())!
             subLabel.font = UIFont.systemFont(ofSize: 12)
             subLabel.sizeToFit()
             

@@ -22,12 +22,38 @@ class AreaTableViewController: UITableViewController {
         tableView.tableFooterView = UIView(frame: .zero)
     }
     
-    func loadData() {
-        areas.append(Area(name: "Bedroom", tasks: [Task]()))
-        areas.append(Area(name: "Living Room", tasks: [Task]()))
-        areas.append(Area(name: "Kitchen", tasks: [Task]()))
+    override func viewDidAppear(_ animated: Bool) {
+        areas = AreaData.sharedData.areas
         
-        AreaData.sharedData.areas = areas
+        self.tableView.reloadSections([0], with: .fade)
+    }
+    
+    func loadData() {
+        // Load from a JSON file
+        let decoder = JSONDecoder()
+        let url = FileManager.filePathInDocumentsDirectory(filename: "data.json")
+        do {
+            let data = try Data.init(contentsOf: url)
+            areas = try decoder.decode(Array<Area>.self, from: data)
+            
+            AreaData.sharedData.areas = areas
+        } catch {
+            print("Error loading Data: \(error)")
+        }
+    }
+    
+    func saveData() {
+        let url = FileManager.filePathInDocumentsDirectory(filename: "data.json")
+        
+        // Saving to Disk in JSON format
+        let encoder = JSONEncoder()
+        do {
+            let dataToSave = try encoder.encode(AreaData.sharedData.areas)
+            
+            try dataToSave.write(to: url)
+        } catch {
+            print("Error: \(error)")
+        }
     }
 
     func createTextBoxAlert(title: String, placeHolder: String) {
@@ -48,6 +74,8 @@ class AreaTableViewController: UITableViewController {
                     self.areas.append(Area(name: name, tasks: [Task]()))
                     
                     AreaData.sharedData.areas = self.areas
+                    
+                    self.saveData()
                 }
             }
             
@@ -79,7 +107,7 @@ class AreaTableViewController: UITableViewController {
             // add progressView to Cell
             let progressView = UIProgressView(progressViewStyle: .default)
 //            progressView.tintColor = UIColor(red: 1, green: 0.5, blue: 0.5, alpha: 1)
-            progressView.progress = 0.5
+            progressView.progress = areas[indexPath.row].getProgressPercent()
             
             cell.accessoryView = progressView
         } else {
@@ -109,6 +137,8 @@ class AreaTableViewController: UITableViewController {
             
             AreaData.sharedData.areas = self.areas
             
+            self.saveData()
+
             // update the tableview
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {

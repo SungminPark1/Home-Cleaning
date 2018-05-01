@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Task {
+class Task: Codable {
     var name: String
     
     var frequency: Int
@@ -31,15 +31,20 @@ class Task {
         self.lastCompletedDate = Date()
     }
     
-    func getRemainingTime() -> String {
-        var timeString = ""
+    func getRemainingTime() -> Double {
         let timePassed = self.lastCompletedDate.timeIntervalSinceNow
-        let timeRemaining = self.dueTimeInterval + timePassed
+        
+        return self.dueTimeInterval + timePassed
+    }
+    
+    func getRemainingTimeString() -> String {
+        var timeString = ""
+        let timeRemaining = getRemainingTime()
         
         let days = ceil(timeRemaining / (60 * 60 * 24))
         
         if days <= 1 {
-            let hours = ceil(timeRemaining / (60 * 60))
+            let hours = round(timeRemaining / (60 * 60) * 10) / 10
             timeString = "Due in \(hours) Hours"
         } else if days > 1 {
             timeString = "Due in \(days) Days"
