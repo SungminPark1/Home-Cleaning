@@ -54,13 +54,15 @@ class AreaDetailTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "areaTaskIdentifier", for: indexPath)
         
         if indexPath.row < (area?.tasks.count)! {
-            cell.textLabel?.text = area?.tasks[indexPath.row].name
+            let task = area?.tasks[indexPath.row]
+            
+            cell.textLabel?.text = task?.name
             cell.textLabel?.textColor = UIColor.black
             cell.textLabel?.textAlignment = .left
             
             
             let subLabel = UILabel()
-            subLabel.text = "Due in xx Day(s)"
+            subLabel.text = (task?.getRemainingTime())!
             subLabel.font = UIFont.systemFont(ofSize: 12)
             subLabel.sizeToFit()
             

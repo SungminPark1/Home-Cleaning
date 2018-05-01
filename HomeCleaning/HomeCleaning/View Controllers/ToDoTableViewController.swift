@@ -43,10 +43,12 @@ class ToDoTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "toDoIdentifier", for: indexPath)
 
-        cell.textLabel?.text = areas[indexPath.section].tasks[indexPath.row].name
+        let task = areas[indexPath.section].tasks[indexPath.row]
+        
+        cell.textLabel?.text = task.name
         
         let subLabel = UILabel()
-        subLabel.text = "Due in xx Day(s)"
+        subLabel.text = task.getRemainingTime()
         subLabel.font = UIFont.systemFont(ofSize: 12)
         subLabel.sizeToFit()
         
