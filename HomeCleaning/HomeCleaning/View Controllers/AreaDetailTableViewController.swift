@@ -28,14 +28,17 @@ class AreaDetailTableViewController: UITableViewController {
     @IBAction func unwindToAreaDetail(segue: UIStoryboardSegue) {
         if segue.identifier == "unwindToAreaDetail" {
             let addTaskVC = segue.source as! AddTaskViewController
-            
             let name = addTaskVC.taskNameTextField.text
-            let frequency = addTaskVC.frequency
-            let notification = addTaskVC.notificicationSwitch.isOn
             
-            area?.tasks.append(Task(name: name!, frequency: frequency, notification: notification))
+            // prevent creating nameless task
+            if name != "" {
+                let frequency = addTaskVC.frequency
+                let notification = addTaskVC.notificicationSwitch.isOn
+            
+                area?.tasks.append(Task(name: name!, frequency: frequency, notification: notification))
 
-            tableView.reloadData()
+                tableView.reloadData()
+            }
         }
     }
     

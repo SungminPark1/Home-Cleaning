@@ -25,7 +25,7 @@ class AreaTableViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         areas = AreaData.sharedData.areas
         
-        self.tableView.reloadSections([0], with: .fade)
+        self.tableView.reloadSections([0], with: .automatic)
     }
     
     func loadData() {

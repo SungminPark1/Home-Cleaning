@@ -20,7 +20,6 @@ class Task: Codable {
     var isPaused: Bool = false
     
     var lastCompletedDate: Date
-    
     var history: [Date] = []
     
     init(name: String, frequency: Int, notification: Bool) {
@@ -38,6 +37,9 @@ class Task: Codable {
     }
     
     func getRemainingTimeString() -> String {
+        if isPaused {
+            return "Task is paused"
+        }
         var timeString = ""
         let timeRemaining = getRemainingTime()
         
@@ -61,5 +63,13 @@ class Task: Codable {
     
     func taskReset() {
         lastCompletedDate = Date()
+    }
+    
+    func getHistoryIndexString(index: Int) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .medium
+        
+        return formatter.string(from: history[index])
     }
 }

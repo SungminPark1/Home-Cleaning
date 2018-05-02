@@ -87,15 +87,11 @@ class TaskDetailViewController: UIViewController {
     }
     
     @objc func notificationSwitchChanged(mySwitch: UISwitch!) {
-        task?.notification = !(task?.notification)!
-            
-        mySwitch.setOn((task?.notification)!, animated: true)
+        task?.notification = mySwitch.isOn
     }
     
     @objc func pauseSwitchChanged(mySwitch: UISwitch!) {
-        task?.isPaused = !(task?.isPaused)!
-        
-        mySwitch.setOn((task?.isPaused)!, animated: true)
+        task?.isPaused = mySwitch.isOn
     }
     
     // MARK: - Navigation
@@ -226,7 +222,7 @@ extension TaskDetailViewController: UITableViewDataSource {
                 cell.textLabel?.text = "TBD"
             }
         } else if visibleTableControl.selectedSegmentIndex == segmentID.history.rawValue {
-            cell.textLabel?.text = "History"
+            cell.textLabel?.text = task?.getHistoryIndexString(index: indexPath.row)
             cell.accessoryView = nil
         }
         
