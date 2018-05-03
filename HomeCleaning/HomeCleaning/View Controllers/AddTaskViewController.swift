@@ -21,7 +21,11 @@ class AddTaskViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "New Task"
+        if editTask {
+            self.navigationItem.title = "Editing Task"
+        } else {
+            self.navigationItem.title = "New Task"
+        }
         
         taskNameTextField.text = name
         frequencyNumberLabel.text = "\(frequency)"
