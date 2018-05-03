@@ -12,11 +12,11 @@ class AddTaskViewController: UIViewController {
     var editTask: Bool = false
     var name: String = ""
     var frequency: Int = 14
-    var notification: Bool = false
+    var priorityWeight = 1
     
     @IBOutlet weak var taskNameTextField: UITextField!
     @IBOutlet weak var frequencyNumberLabel: UILabel!
-    @IBOutlet weak var notificicationSwitch: UISwitch!
+    @IBOutlet weak var prioritySegment: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,7 @@ class AddTaskViewController: UIViewController {
         
         taskNameTextField.text = name
         frequencyNumberLabel.text = "\(frequency)"
-        notificicationSwitch.setOn(notification, animated: true)
+        prioritySegment.selectedSegmentIndex = priorityWeight - 1
     }
     
     @IBAction func cancelTapped() {

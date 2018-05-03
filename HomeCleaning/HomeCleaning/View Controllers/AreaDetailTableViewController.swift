@@ -33,9 +33,15 @@ class AreaDetailTableViewController: UITableViewController {
             // prevent creating nameless task
             if name != "" {
                 let frequency = addTaskVC.frequency
-                let notification = addTaskVC.notificicationSwitch.isOn
-            
-                area?.tasks.append(Task(name: name!, frequency: frequency, notification: notification))
+                let priorityWeight = addTaskVC.prioritySegment.selectedSegmentIndex + 1
+                
+                print (addTaskVC.prioritySegment.selectedSegmentIndex)
+                
+                area?.tasks.append(Task(
+                    name: name!,
+                    frequency: frequency,
+                    priorityWeight: priorityWeight
+                ))
 
                 tableView.reloadData()
             }

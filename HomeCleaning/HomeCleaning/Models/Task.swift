@@ -12,6 +12,7 @@ class Task: Codable {
     var name: String
     var frequency: Int
     var notification: Bool = false
+    var priorityWeight: Int = 1
     var isPaused: Bool = false
     var lastCompletedDate: Date
     var history: [Date] = []
@@ -29,10 +30,10 @@ class Task: Codable {
         return checkOverdue
     }
     
-    init(name: String, frequency: Int, notification: Bool) {
+    init(name: String, frequency: Int, priorityWeight: Int) {
         self.name = name
         self.frequency = frequency
-        self.notification = notification
+        self.priorityWeight = priorityWeight
         
         self.lastCompletedDate = Date()
     }
@@ -75,6 +76,20 @@ class Task: Codable {
     
     func taskReset() {
         lastCompletedDate = Date()
+    }
+    
+    func getPriorityString() -> String {
+        var priorityString = ""
+        
+        if priorityWeight == 1 {
+            priorityString = "Priority: Low"
+        } else if priorityWeight == 2 {
+            priorityString = "Priority: Medium"
+        } else if priorityWeight == 3 {
+            priorityString = "Priority: High"
+        }
+        
+        return priorityString
     }
     
     func getHistoryIndexString(index: Int) -> String {

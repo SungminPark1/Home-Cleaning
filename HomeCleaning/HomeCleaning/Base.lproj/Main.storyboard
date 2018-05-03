@@ -138,40 +138,46 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notification" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uTS-0x-Vi5">
-                                <rect key="frame" x="16" y="282" width="343" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Priority" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TBr-Pg-Lyu">
+                                <rect key="frame" x="16" y="258" width="61" height="21"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="5pz-OT-Eew">
-                                <rect key="frame" x="290" y="277" width="51" height="31"/>
-                            </switch>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="eee-c1-PCj">
+                                <rect key="frame" x="24" y="297" width="327" height="29"/>
+                                <segments>
+                                    <segment title="Low"/>
+                                    <segment title="Medium"/>
+                                    <segment title="High"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="TBr-Pg-Lyu" firstAttribute="top" secondItem="HZd-Qs-VPV" secondAttribute="bottom" constant="24" id="0sG-P0-pq8"/>
                             <constraint firstItem="kau-hs-fuM" firstAttribute="top" secondItem="TMP-6v-eNY" secondAttribute="bottom" constant="8" id="5j2-xf-G5Y"/>
                             <constraint firstItem="TMP-6v-eNY" firstAttribute="leading" secondItem="JoV-C9-7qZ" secondAttribute="leading" constant="16" id="B7U-xn-rlB"/>
-                            <constraint firstItem="5pz-OT-Eew" firstAttribute="centerY" secondItem="uTS-0x-Vi5" secondAttribute="centerY" id="Dhz-IP-ADW"/>
+                            <constraint firstItem="JoV-C9-7qZ" firstAttribute="trailing" secondItem="TBr-Pg-Lyu" secondAttribute="trailing" constant="298" id="BYR-i2-k44"/>
                             <constraint firstItem="JoV-C9-7qZ" firstAttribute="trailing" secondItem="kau-hs-fuM" secondAttribute="trailing" constant="16" id="E6K-gs-WWQ"/>
-                            <constraint firstItem="JoV-C9-7qZ" firstAttribute="trailing" secondItem="5pz-OT-Eew" secondAttribute="trailing" constant="36" id="Fe0-u3-CVf"/>
                             <constraint firstItem="Oll-dh-15f" firstAttribute="leading" secondItem="YN3-OZ-M20" secondAttribute="trailing" constant="73" id="J7g-B5-Oz7"/>
-                            <constraint firstItem="JoV-C9-7qZ" firstAttribute="trailing" secondItem="uTS-0x-Vi5" secondAttribute="trailing" constant="16" id="JTz-mx-EOT"/>
                             <constraint firstItem="Oll-dh-15f" firstAttribute="top" secondItem="PyL-0p-7ho" secondAttribute="bottom" constant="15.5" id="JsQ-ho-00j"/>
                             <constraint firstItem="HZd-Qs-VPV" firstAttribute="leading" secondItem="dfP-JF-Rnt" secondAttribute="trailing" constant="8" id="Lfh-DN-G0Z"/>
                             <constraint firstItem="PyL-0p-7ho" firstAttribute="top" secondItem="kau-hs-fuM" secondAttribute="bottom" constant="24" id="MN9-Hm-N4t"/>
                             <constraint firstItem="JoV-C9-7qZ" firstAttribute="trailing" secondItem="TMP-6v-eNY" secondAttribute="trailing" constant="16" id="N8F-7m-55b"/>
-                            <constraint firstItem="uTS-0x-Vi5" firstAttribute="leading" secondItem="JoV-C9-7qZ" secondAttribute="leading" constant="16" id="NwJ-Qn-Tee"/>
+                            <constraint firstItem="TBr-Pg-Lyu" firstAttribute="leading" secondItem="JoV-C9-7qZ" secondAttribute="leading" constant="16" id="RoK-Ds-0o3"/>
                             <constraint firstItem="dfP-JF-Rnt" firstAttribute="top" secondItem="PyL-0p-7ho" secondAttribute="bottom" constant="8" id="Ubr-nO-cKn"/>
                             <constraint firstItem="PyL-0p-7ho" firstAttribute="leading" secondItem="JoV-C9-7qZ" secondAttribute="leading" constant="16" id="YBJ-Wv-nXt"/>
                             <constraint firstItem="YN3-OZ-M20" firstAttribute="top" secondItem="PyL-0p-7ho" secondAttribute="bottom" constant="8" id="cbN-pG-kpA"/>
                             <constraint firstItem="YN3-OZ-M20" firstAttribute="leading" secondItem="HZd-Qs-VPV" secondAttribute="trailing" constant="8" id="eOh-IA-oQE"/>
                             <constraint firstItem="dfP-JF-Rnt" firstAttribute="leading" secondItem="JoV-C9-7qZ" secondAttribute="leading" constant="36" id="ew5-zK-v5A"/>
+                            <constraint firstItem="eee-c1-PCj" firstAttribute="top" secondItem="TBr-Pg-Lyu" secondAttribute="bottom" constant="18" id="jTT-nl-wW6"/>
                             <constraint firstItem="JoV-C9-7qZ" firstAttribute="trailing" secondItem="PyL-0p-7ho" secondAttribute="trailing" constant="16" id="jtv-5T-MRW"/>
                             <constraint firstItem="JoV-C9-7qZ" firstAttribute="trailing" secondItem="Oll-dh-15f" secondAttribute="trailing" constant="36" id="kzL-4S-AJj"/>
                             <constraint firstItem="kau-hs-fuM" firstAttribute="leading" secondItem="JoV-C9-7qZ" secondAttribute="leading" constant="16" id="pdy-7T-Jpp"/>
                             <constraint firstItem="TMP-6v-eNY" firstAttribute="top" secondItem="JoV-C9-7qZ" secondAttribute="top" constant="24" id="pwb-lY-bYb"/>
-                            <constraint firstItem="5pz-OT-Eew" firstAttribute="top" secondItem="YN3-OZ-M20" secondAttribute="bottom" constant="36" id="trI-qA-TnQ"/>
+                            <constraint firstItem="eee-c1-PCj" firstAttribute="leading" secondItem="JoV-C9-7qZ" secondAttribute="leading" constant="24" id="rOQ-b5-7UP"/>
+                            <constraint firstItem="JoV-C9-7qZ" firstAttribute="trailing" secondItem="eee-c1-PCj" secondAttribute="trailing" constant="24" id="vpF-22-zBH"/>
                             <constraint firstItem="HZd-Qs-VPV" firstAttribute="centerY" secondItem="dfP-JF-Rnt" secondAttribute="centerY" id="wuy-fI-nfA"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JoV-C9-7qZ"/>
@@ -190,7 +196,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="frequencyNumberLabel" destination="HZd-Qs-VPV" id="UFg-Li-b8k"/>
-                        <outlet property="notificicationSwitch" destination="5pz-OT-Eew" id="Ehu-Ul-6to"/>
+                        <outlet property="prioritySegment" destination="eee-c1-PCj" id="qKe-8W-9nw"/>
                         <outlet property="taskNameTextField" destination="kau-hs-fuM" id="OYx-bS-o6o"/>
                         <segue destination="ahY-C2-Qh1" kind="unwind" identifier="unwindToAreaDetail" unwindAction="unwindToAreaDetailWithSegue:" id="Cnb-ZU-Rs7"/>
                         <segue destination="ahY-C2-Qh1" kind="unwind" identifier="unwindToTaskDetail" unwindAction="unwindToTaskDetailWithSegue:" id="Dt8-W7-zyB"/>

@@ -101,7 +101,7 @@ class TaskDetailViewController: UIViewController {
             
             task?.name = addTaskVC.taskNameTextField.text!
             task?.frequency = addTaskVC.frequency
-            task?.notification = addTaskVC.notificicationSwitch.isOn
+            task?.priorityWeight = addTaskVC.prioritySegment.selectedSegmentIndex + 1
             
             self.statusTable.reloadData()
         }
@@ -114,7 +114,7 @@ class TaskDetailViewController: UIViewController {
             addTaskVC.editTask = true
             addTaskVC.name = task?.name ?? ""
             addTaskVC.frequency = task?.frequency ?? 14
-            addTaskVC.notification = task?.notification ?? false
+            addTaskVC.priorityWeight = task?.priorityWeight ?? 1
         }
     }
 }
@@ -152,7 +152,7 @@ extension TaskDetailViewController: UITableViewDataSource {
                 numOfRows = 1
                 
             case sectionID.setting.rawValue:
-                numOfRows = 3
+                numOfRows = 4
                 
             case sectionID.done.rawValue:
                 numOfRows = 1
@@ -201,6 +201,10 @@ extension TaskDetailViewController: UITableViewDataSource {
                     
                     cell.accessoryView = nil
                 } else if indexPath.row == 1 {
+                    cell.textLabel?.text = task?.getPriorityString()
+                    
+                    cell.accessoryView = nil
+                } else if indexPath.row == 2 {
                     cell.textLabel?.text = "Due Date Alert"
                     
                     switchView.setOn((task?.notification)!, animated: true)
