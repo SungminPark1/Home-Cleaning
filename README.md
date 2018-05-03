@@ -71,7 +71,6 @@ Users are able to set up default task data.
 ### New Features  
 * Able to create Area
 * Able to create Task
-* Basic Task Class
 
 ### Upcoming  
 * Ability to edit tasks
