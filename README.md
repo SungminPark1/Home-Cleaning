@@ -11,32 +11,34 @@ An app to help manage cleaning routines in your household.
 
 ## Proposed Features  
 * Area View
-  * Break down by rooms (living room, bedroom, bathroom, etc.)
-  * Display area’s cleanliness (a meter, text, or something)
+  * Break down by rooms
+  * Display area’s cleanliness
 * Task View
-  * Break down Task(clean sink, vacuum floor, etc.)
+  * Break down Task
+  * Task displays when its due or if its overdue
   * Add New Task
     * Task Name
-    * Schedule routine (every 10 days)
-    * Who should do the task
-    * Quick Task set up (relaxed, standard, proactive cleaning)
-  * Task displays when its due or if its overdue
-  * Sort by feature
+    * Schedule frequency
+    * Task Priority
+    * Who should do the task __(Not Implemented)__
+    * Quick Task set up __(Not Implemented)__
+  * Sort by feature __(Not Implemented)__
 * Task Detail View
-  * Allow notification
-  * Toggle routine on / off
-  * Task completed (resets timer)
-    * Person that cleaned the area
-  * List of previously cleaned dates
-    * Who completed the task
+  * Allow notification __(Not Implemented)__
+  * Pause task
+  * Reset task timer
+  * Complete task
+    * Person that cleaned the area __(Not Implemented)__
+  * List of previously cleaned dates 
+    * Who completed the task __(Not Implemented)__
 * Task List View
   * Shows all task
-  * Organized based on when task should be finished
-* House Statistic
+  * Organized based on when task should be finished __(Not Implemented)__
+* House Statistic __(Not Implemented)__
   * Which area is cleaned the most / least
   * What task is done the most / least
   * Who cleans the most / least
-* App data shared between devices (allows multiple users to see same task)
+* App data shared between devices (allows multiple users to see same task) __(Not Implemented)__
 
 
 ## Checkpoint 1  
