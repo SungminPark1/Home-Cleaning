@@ -18,7 +18,6 @@ class AreaDetailTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         tableView.tableFooterView = UIView(frame: .zero)
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -77,18 +76,8 @@ class AreaDetailTableViewController: UITableViewController {
             cell.textLabel?.textColor = UIColor.black
             cell.textLabel?.textAlignment = .left
             
-            
-            let subLabel = UILabel()
-            subLabel.text = (task?.getRemainingTimeString())!
-            subLabel.font = UIFont.systemFont(ofSize: 12)
-            subLabel.sizeToFit()
-            
-            if (task?.isOverdue == true) {
-                subLabel.textColor = UIColor.red
-            } else {
-                subLabel.textColor = UIColor.black
-            }
-            
+            // set up accessory view
+            let subLabel = task?.getTaskSubLabel()
             cell.accessoryView = subLabel
         } else {
             cell.textLabel?.text = "+ Add Task"

@@ -11,11 +11,14 @@ import UIKit
 class TaskDetailViewController: UIViewController {
     var task: Task?
     let numSections = 4
+    enum segmentID: Int {
+        case status = 0, history
+    }
     enum sectionID: Int {
         case task = 0, setting, done, reset
     }
-    enum segmentID: Int {
-        case status = 0, history
+    enum settingID: Int {
+        case frequency = 0, priority, alert, pause
     }
     
     var editButton: UIBarButtonItem!
@@ -188,17 +191,8 @@ extension TaskDetailViewController: UITableViewDataSource {
             case sectionID.task.rawValue:
                 cell.textLabel?.text = task?.name
                 
-                let subLabel = UILabel()
-                subLabel.text = (task?.getRemainingTimeString())!
-                subLabel.font = UIFont.systemFont(ofSize: 12)
-                subLabel.sizeToFit()
-                
-                if (task?.isOverdue == true) {
-                    subLabel.textColor = UIColor.red
-                } else {
-                    subLabel.textColor = UIColor.black
-                }
-                
+                // set up accessory view
+                let subLabel = task?.getTaskSubLabel()
                 cell.accessoryView = subLabel
         
             case sectionID.setting.rawValue:
@@ -206,23 +200,25 @@ extension TaskDetailViewController: UITableViewDataSource {
                 let switchView = UISwitch(frame: .zero)
                 switchView.tag = indexPath.row // for detect which row switch Changed
                 
-                if indexPath.row == 0 {
+                if indexPath.row == settingID.frequency.rawValue {
                     cell.textLabel?.text = "Due Every: \(task?.frequency ?? -1) Day(s)"
                     
                     cell.accessoryView = nil
-                } else if indexPath.row == 1 {
+                } else if indexPath.row == settingID.priority.rawValue {
                     cell.textLabel?.text = task?.getPriorityString()
                     
                     cell.accessoryView = nil
-                } else if indexPath.row == 2 {
+                } else if indexPath.row == settingID.alert.rawValue {
                     cell.textLabel?.text = "Due Date Alert"
                     
+                    // set up accessory view
                     switchView.setOn((task?.notification)!, animated: true)
                     switchView.addTarget(self, action: #selector(notificationSwitchChanged), for: .valueChanged)
                     cell.accessoryView = switchView
-                } else {
+                } else if indexPath.row == settingID.pause.rawValue {
                     cell.textLabel?.text = "Pause Task"
                     
+                    // set up accessory view
                     switchView.setOn((task?.isPaused)!, animated: true)
                     switchView.addTarget(self, action: #selector(pauseSwitchChanged), for: .valueChanged)
                     cell.accessoryView = switchView
@@ -243,6 +239,7 @@ extension TaskDetailViewController: UITableViewDataSource {
             }
         } else if visibleTableControl.selectedSegmentIndex == segmentID.history.rawValue {
             cell.textLabel?.text = task?.getHistoryIndexString(index: indexPath.row)
+            
             cell.accessoryView = nil
         }
         
@@ -267,7 +264,11 @@ extension TaskDetailViewController: UITableViewDataSource {
                 title = ""
             }
         } else if visibleTableControl.selectedSegmentIndex == segmentID.history.rawValue {
-            title = "History"
+            if task?.history.count ?? 0 <= 0 {
+                title = "No History Recorded"
+            } else {
+                title = "History"
+            }
         }
         
         return title
@@ -275,16 +276,11 @@ extension TaskDetailViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         var height: CGFloat = 44.0
+        
         if visibleTableControl.selectedSegmentIndex == segmentID.status.rawValue {
-            switch indexPath.section {
-            case sectionID.done.rawValue:
+            if indexPath.section == sectionID.done.rawValue {
                 height = 55.0
-                
-            default:
-                height = 44.0
             }
-        } else if visibleTableControl.selectedSegmentIndex == segmentID.history.rawValue {
-            height = 44.0
         }
         
         return height

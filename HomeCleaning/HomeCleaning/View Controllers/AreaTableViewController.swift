@@ -28,6 +28,36 @@ class AreaTableViewController: UITableViewController {
         self.tableView.reloadSections([0], with: .automatic)
     }
     
+    func createNewAreaAlert() {
+        let alert = UIAlertController(title: "New Area", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addTextField(configurationHandler: { (textField) in
+            textField.placeholder = "Area Name"
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive, handler: { (action: UIAlertAction!) in
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction!) in
+            let firstTextField = alert.textFields![0] as UITextField
+            
+            // only create an area if its name is not an empty
+            if let name = firstTextField.text {
+                if name != "" {
+                    self.areas.append(Area(name: name, tasks: [Task]()))
+                    
+                    AreaData.sharedData.areas = self.areas
+                    
+                    self.saveData()
+                }
+            }
+            
+            self.tableView.reloadData()
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     // MARK: - Load & Save
     func loadData() {
         // Load from a JSON file
@@ -56,34 +86,18 @@ class AreaTableViewController: UITableViewController {
             print("Error: \(error)")
         }
     }
-
-    func createTextBoxAlert(title: String, placeHolder: String) {
-        let alert = UIAlertController(title: title, message: "", preferredStyle: UIAlertControllerStyle.alert)
-        
-        alert.addTextField(configurationHandler: { (textField) in
-            textField.placeholder = placeHolder
-        })
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive, handler: { (action: UIAlertAction!) in
-            
-        }))
-        alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction!) in
-            let firstTextField = alert.textFields![0] as UITextField
-            
-            if let name = firstTextField.text {
-                if name != "" {
-                    self.areas.append(Area(name: name, tasks: [Task]()))
-                    
-                    AreaData.sharedData.areas = self.areas
-                    
-                    self.saveData()
-                }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let indexPath = tableView.indexPathForSelectedRow {
+            let selectedRow = indexPath.row
+            guard selectedRow < AreaData.sharedData.areas.count else {
+                print("row \(selectedRow) is not in Area!")
+                return
             }
-            
-            self.tableView.reloadData()
-        }))
-        
-        self.present(alert, animated: true, completion: nil)
+            let AreaDetailVC = segue.destination as! AreaDetailTableViewController
+            AreaDetailVC.area = AreaData.sharedData.areas[selectedRow]
+        }
     }
     
     // MARK: - Table View Delegate
@@ -91,7 +105,7 @@ class AreaTableViewController: UITableViewController {
         if indexPath.row < areas.count {
             performSegue(withIdentifier: "areaDetailSegue", sender: self)
         } else {
-            createTextBoxAlert(title: "New Area", placeHolder: "Area Name")
+            createNewAreaAlert()
         }
     }
     
@@ -116,9 +130,8 @@ class AreaTableViewController: UITableViewController {
             
             // add progressView to Cell
             let progressView = UIProgressView(progressViewStyle: .default)
-//            progressView.tintColor = UIColor(red: 1, green: 0.5, blue: 0.5, alpha: 1)
-            progressView.progress = areas[indexPath.row].getProgressPercent()
             
+            progressView.progress = areas[indexPath.row].getProgressPercent()
             cell.accessoryView = progressView
         } else {
             cell.textLabel?.text = "+ Add Area"
@@ -155,18 +168,4 @@ class AreaTableViewController: UITableViewController {
             //
         }
     }
-    
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let indexPath = tableView.indexPathForSelectedRow {
-            let selectedRow = indexPath.row
-            guard selectedRow < AreaData.sharedData.areas.count else {
-                print("row \(selectedRow) is not in Area!")
-                return
-            }
-            let AreaDetailVC = segue.destination as! AreaDetailTableViewController
-            AreaDetailVC.area = AreaData.sharedData.areas[selectedRow]
-        }
-    }
-
 }

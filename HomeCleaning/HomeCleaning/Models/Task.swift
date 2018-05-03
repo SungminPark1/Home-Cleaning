@@ -6,7 +6,7 @@
 //  Copyright © 2018 Sungmin. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Task: Codable {
     var name: String
@@ -90,6 +90,21 @@ class Task: Codable {
         }
         
         return timeString
+    }
+    
+    func getTaskSubLabel() -> UILabel {
+        let subLabel = UILabel()
+        subLabel.text = self.getRemainingTimeString()
+        subLabel.font = UIFont.systemFont(ofSize: 12)
+        subLabel.sizeToFit()
+        
+        if (self.isOverdue) {
+            subLabel.textColor = UIColor.red
+        } else {
+            subLabel.textColor = UIColor.black
+        }
+        
+        return subLabel
     }
     
     func getPriorityString() -> String {
