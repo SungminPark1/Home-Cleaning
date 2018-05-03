@@ -309,7 +309,7 @@
         <scene sceneID="MlP-Gz-QbQ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="v3A-H7-G4d" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Area" id="5qt-yo-58o"/>
+                    <tabBarItem key="tabBarItem" title="Area" image="Home" selectedImage="Home" id="5qt-yo-58o"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Vr6-Lq-rl7">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -328,7 +328,7 @@
         <scene sceneID="okL-K2-Kkh">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="98j-50-IHg" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="To-Do" id="f1m-BI-iX9"/>
+                    <tabBarItem key="tabBarItem" title="To-Do" image="ToDo" selectedImage="ToDo" id="f1m-BI-iX9"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Np5-aL-WkZ">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -362,6 +362,10 @@
             <point key="canvasLocation" x="1484.8" y="-377.81109445277366"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Home" width="25" height="25"/>
+        <image name="ToDo" width="25" height="25"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="YgG-1j-js8"/>
         <segue reference="cmN-Mm-tCI"/>
