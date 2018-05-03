@@ -36,8 +36,6 @@ class AreaDetailTableViewController: UITableViewController {
                 let frequency = addTaskVC.frequency
                 let priorityWeight = addTaskVC.prioritySegment.selectedSegmentIndex + 1
                 
-                print (addTaskVC.prioritySegment.selectedSegmentIndex)
-                
                 area?.tasks.append(Task(
                     name: name!,
                     frequency: frequency,
