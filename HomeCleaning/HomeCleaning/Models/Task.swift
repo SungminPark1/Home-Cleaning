@@ -75,7 +75,7 @@ class Task: Codable {
         var timeString = ""
         let timeRemaining = getRemainingTime()
         
-        let days = ceil(timeRemaining / (60 * 60 * 24))
+        let days = round(timeRemaining / (60 * 60 * 24) * 10) / 10
         
         if days <= -1 {
             timeString = "Due \(abs(days)) Days ago"
