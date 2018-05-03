@@ -2,8 +2,8 @@
 //  ToDoViewController.swift
 //  HomeCleaning
 //
-//  Created by Balor on 4/11/18.
-//  Copyright © 2018 Balor. All rights reserved.
+//  Created by Sungmin on 4/11/18.
+//  Copyright © 2018 Sungmin. All rights reserved.
 //
 
 import UIKit
@@ -40,6 +40,7 @@ class TaskDetailViewController: UIViewController {
         visibleTableControl.addTarget(self, action: #selector(updateTable), for: .valueChanged)
     }
     
+    // MARK: - Functions
     func taskFinished() {
         let alert = UIAlertController(title: "Complete Task?", message: "This action can not be undo.", preferredStyle: UIAlertControllerStyle.alert)
         
@@ -127,7 +128,7 @@ class TaskDetailViewController: UIViewController {
     }
 }
 
-// MARK: - UITableViewDelegate
+// MARK: - Table View Delegate
 extension TaskDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == sectionID.done.rawValue {
@@ -138,6 +139,7 @@ extension TaskDetailViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - Table View Data Source
 extension TaskDetailViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         var sections: Int = 1

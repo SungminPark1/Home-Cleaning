@@ -2,8 +2,8 @@
 //  Task.swift
 //  HomeCleaning
 //
-//  Created by Balor on 4/5/18.
-//  Copyright © 2018 Balor. All rights reserved.
+//  Created by Sungmin on 4/5/18.
+//  Copyright © 2018 Sungmin. All rights reserved.
 //
 
 import Foundation

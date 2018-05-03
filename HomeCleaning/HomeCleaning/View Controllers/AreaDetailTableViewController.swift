@@ -2,8 +2,8 @@
 //  TaskTableViewController.swift
 //  HomeCleaning
 //
-//  Created by Balor on 4/5/18.
-//  Copyright © 2018 Balor. All rights reserved.
+//  Created by Sungmin on 4/5/18.
+//  Copyright © 2018 Sungmin. All rights reserved.
 //
 
 import UIKit
@@ -25,6 +25,7 @@ class AreaDetailTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    // MARK: - IB Actions
     @IBAction func unwindToAreaDetail(segue: UIStoryboardSegue) {
         if segue.identifier == "unwindToAreaDetail" {
             let addTaskVC = segue.source as! AddTaskViewController
@@ -45,6 +46,15 @@ class AreaDetailTableViewController: UITableViewController {
 
                 tableView.reloadData()
             }
+        }
+    }
+    
+    // MARK: - Table View Delegate
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row < (area?.tasks.count)! {
+            performSegue(withIdentifier: "taskSegue", sender: self)
+        } else {
+            performSegue(withIdentifier: "addTaskSegue", sender: self)
         }
     }
     
@@ -111,14 +121,6 @@ class AreaDetailTableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             //
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row < (area?.tasks.count)! {
-            performSegue(withIdentifier: "taskSegue", sender: self)
-        } else {
-            performSegue(withIdentifier: "addTaskSegue", sender: self)
         }
     }
 

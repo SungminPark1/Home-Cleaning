@@ -2,8 +2,8 @@
 //  AreaTableViewController.swift
 //  HomeCleaning
 //
-//  Created by Balor on 4/5/18.
-//  Copyright © 2018 Balor. All rights reserved.
+//  Created by Sungmin on 4/5/18.
+//  Copyright © 2018 Sungmin. All rights reserved.
 //
 
 import UIKit
@@ -28,6 +28,7 @@ class AreaTableViewController: UITableViewController {
         self.tableView.reloadSections([0], with: .automatic)
     }
     
+    // MARK: - Load & Save
     func loadData() {
         // Load from a JSON file
         let decoder = JSONDecoder()
@@ -85,7 +86,16 @@ class AreaTableViewController: UITableViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    // MARK: - Table view data source
+    // MARK: - Table View Delegate
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row < areas.count {
+            performSegue(withIdentifier: "areaDetailSegue", sender: self)
+        } else {
+            createTextBoxAlert(title: "New Area", placeHolder: "Area Name")
+        }
+    }
+    
+    // MARK: - Table View Data Source
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -143,14 +153,6 @@ class AreaTableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             //
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row < areas.count {
-            performSegue(withIdentifier: "areaDetailSegue", sender: self)
-        } else {
-            createTextBoxAlert(title: "New Area", placeHolder: "Area Name")
         }
     }
     
