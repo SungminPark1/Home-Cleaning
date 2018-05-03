@@ -183,6 +183,12 @@ extension TaskDetailViewController: UITableViewDataSource {
                 subLabel.font = UIFont.systemFont(ofSize: 12)
                 subLabel.sizeToFit()
                 
+                if (task?.isOverdue == true) {
+                    subLabel.textColor = UIColor.red
+                } else {
+                    subLabel.textColor = UIColor.black
+                }
+                
                 cell.accessoryView = subLabel
         
             case sectionID.setting.rawValue:

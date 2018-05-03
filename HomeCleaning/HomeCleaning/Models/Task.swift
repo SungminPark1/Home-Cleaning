@@ -10,17 +10,24 @@ import Foundation
 
 class Task: Codable {
     var name: String
-    
     var frequency: Int
+    var notification: Bool = false
+    var isPaused: Bool = false
+    var lastCompletedDate: Date
+    var history: [Date] = []
+    
     var dueTimeInterval: TimeInterval {
         return TimeInterval(60 * 60 * 24 * frequency)
     }
     
-    var notification: Bool = false
-    var isPaused: Bool = false
-    
-    var lastCompletedDate: Date
-    var history: [Date] = []
+    var isOverdue: Bool {
+        var checkOverdue = false
+        if getRemainingTime() <= 0 {
+            checkOverdue = true
+        }
+        
+        return checkOverdue
+    }
     
     init(name: String, frequency: Int, notification: Bool) {
         self.name = name
@@ -45,7 +52,12 @@ class Task: Codable {
         
         let days = ceil(timeRemaining / (60 * 60 * 24))
         
-        if days <= 1 {
+        if days <= -1 {
+            timeString = "Due \(abs(days)) Days ago"
+        } else if days <= 0 {
+            let hours = round(timeRemaining / (60 * 60) * 10) / 10
+            timeString = "Due \(abs(hours)) Hours ago"
+        } else if days <= 1 {
             let hours = round(timeRemaining / (60 * 60) * 10) / 10
             timeString = "Due in \(hours) Hours"
         } else if days > 1 {

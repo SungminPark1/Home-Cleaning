@@ -69,6 +69,12 @@ class AreaDetailTableViewController: UITableViewController {
             subLabel.font = UIFont.systemFont(ofSize: 12)
             subLabel.sizeToFit()
             
+            if (task?.isOverdue == true) {
+                subLabel.textColor = UIColor.red
+            } else {
+                subLabel.textColor = UIColor.black
+            }
+            
             cell.accessoryView = subLabel
         } else {
             cell.textLabel?.text = "+ Add Task"

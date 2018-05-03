@@ -18,14 +18,24 @@ class Area : Codable {
     }
     
     func getProgressPercent() -> Float {
-        var progressPercent:Float = 0
+        var totalTaskWeight: Float = 0
+        var progressPercent: Float = 0
         if tasks.count > 0 {
             var totalTimePercentRemaining: Float = 0
             for task in tasks {
-                totalTimePercentRemaining += Float(task.getRemainingTime() / task.dueTimeInterval)
+                var taskTimePercent = Float(task.getRemainingTime() / task.dueTimeInterval)
+                
+                // prevent overdue tasks from give negative percent value
+                if taskTimePercent <= 0 {
+                    taskTimePercent = 0
+                }
+                
+                // TO_DO: Give tasks a weight
+                totalTaskWeight += 1
+                totalTimePercentRemaining += taskTimePercent
             }
             
-            progressPercent = totalTimePercentRemaining / Float(tasks.count)
+            progressPercent = totalTimePercentRemaining / totalTaskWeight
         }
         
         return progressPercent
