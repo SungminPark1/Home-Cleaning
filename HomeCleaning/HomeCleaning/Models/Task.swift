@@ -14,6 +14,7 @@ class Task: Codable {
     var notification: Bool = false
     var priorityWeight: Int = 1
     var isPaused: Bool = false
+    var pausedAt: Date
     var lastCompletedDate: Date
     var history: [Date] = []
     
@@ -36,6 +37,28 @@ class Task: Codable {
         self.priorityWeight = priorityWeight
         
         self.lastCompletedDate = Date()
+        self.pausedAt = Date()
+    }
+    
+    func taskCompleted() {
+        lastCompletedDate = Date()
+        
+        history.append(lastCompletedDate)
+    }
+    
+    func taskReset() {
+        lastCompletedDate = Date()
+    }
+    
+    func taskPaused() {
+        self.pausedAt = Date()
+    }
+    
+    // resume task with previous time passed intacted
+    func taskResumed() {
+        let timePassedBeforePause = self.lastCompletedDate.timeIntervalSince(self.pausedAt)
+        
+        self.lastCompletedDate = Date().addingTimeInterval(timePassedBeforePause)
     }
     
     func getRemainingTime() -> Double {
@@ -48,6 +71,7 @@ class Task: Codable {
         if isPaused {
             return "Task is paused"
         }
+        
         var timeString = ""
         let timeRemaining = getRemainingTime()
         
@@ -66,16 +90,6 @@ class Task: Codable {
         }
         
         return timeString
-    }
-    
-    func taskCompleted() {
-        lastCompletedDate = Date()
-        
-        history.append(lastCompletedDate)
-    }
-    
-    func taskReset() {
-        lastCompletedDate = Date()
     }
     
     func getPriorityString() -> String {

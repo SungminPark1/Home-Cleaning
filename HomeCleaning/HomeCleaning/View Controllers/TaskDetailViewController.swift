@@ -92,6 +92,14 @@ class TaskDetailViewController: UIViewController {
     
     @objc func pauseSwitchChanged(mySwitch: UISwitch!) {
         task?.isPaused = mySwitch.isOn
+        
+        if (mySwitch.isOn) {
+            task?.taskPaused()
+        } else {
+            task?.taskResumed()
+        }
+        
+        self.statusTable.reloadSections([0], with: .automatic)
     }
     
     // MARK: - Navigation

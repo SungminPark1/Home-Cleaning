@@ -22,16 +22,20 @@ class Area : Codable {
         var progressPercent: Float = 0
         if tasks.count > 0 {
             var totalTimePercentRemaining: Float = 0
+            
+            // loop through task and only count task that are not paused
             for task in tasks {
-                var taskTimePercent = Float(task.getRemainingTime() / task.dueTimeInterval)
+                if task.isPaused == false {
+                    var taskTimePercent = Float(task.getRemainingTime() / task.dueTimeInterval)
                 
-                // prevent overdue tasks from give negative percent value
-                if taskTimePercent <= 0 {
-                    taskTimePercent = 0
+                    // prevent overdue tasks from give negative percent value
+                    if taskTimePercent <= 0 {
+                        taskTimePercent = 0
+                    }
+                
+                    totalTaskWeight += task.priorityWeight
+                    totalTimePercentRemaining += taskTimePercent * Float(task.priorityWeight)
                 }
-                
-                totalTaskWeight += task.priorityWeight
-                totalTimePercentRemaining += taskTimePercent * Float(task.priorityWeight)
             }
             
             progressPercent = totalTimePercentRemaining / Float(totalTaskWeight)
